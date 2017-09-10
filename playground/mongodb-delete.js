@@ -9,25 +9,25 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
     }
 
     console.log('Connected to MongoDB server');
-
+    
     //deleteMany
-    // db.collection('Todos').deleteMany({
-    //     text: 'eat luch'
-    // }).then((result) => {
-    //     console.log(result);
-    // });
+    db.collection('Todos').deleteMany({
+        text: 'eat luch'
+    }).then((result) => {
+        console.log(result);
+    });
 
     //deleteOne - if multiple docs have the same criteria - it will delete thefirst one
-    // db.collection('Todos').deleteOne({text: 'Eat lunch'}).then((result) => {
-    //     console.log(result);
-    // })
+    db.collection('Todos').deleteOne({text: 'Eat lunch'}).then((result) => {
+        console.log(result);
+    })
 
     //findOneAndDelete
-    // db.collection('Todos').findOneAndDelete({
-    //     completed: false
-    // }).then((result) => {
-    //     console.log(result);
-    // });
+    db.collection('Todos').findOneAndDelete({
+        completed: false
+    }).then((result) => {
+        console.log(result);
+    });
 
     //challenge
     db.collection('Users').deleteMany({
@@ -36,11 +36,11 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
         console.log(result);
     });
 
-    // db.collection('Users').findOneAndDelete({
-    //     age: 21
-    // }).then((result) => {
-    //     console.log(result);
-    // });
+    db.collection('Users').findOneAndDelete({
+        age: 21
+    }).then((result) => {
+        console.log(result);
+    });
 
     //db.close();
 });
