@@ -8,19 +8,19 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
         return console.log('Unable to connecto MongoDB server', err); 
     }
 
-    // console.log('Connected to MongoDB server');
-    // //arg1 filter, arg2 update(google mongo update operators),
-    // db.collection('Todos').findOneAndUpdate({
-    //     _id: new ObjectID('59b3dc3d4e33750561003d36')
-    // }, {
-    //     $set:{//google mongodb update operators (ex: set)
-    //         completed: true
-    //     }
-    // }, {
-    //     returnOriginal: false //in order to get back updated document
-    // }).then((result) => {
-    //     console.log(result);
-    // });
+    console.log('Connected to MongoDB server');
+    //arg1 filter, arg2 update(google mongo update operators),
+    db.collection('Todos').findOneAndUpdate({
+        _id: new ObjectID('59b3dc3d4e33750561003d36')
+    }, {
+        $set:{//google mongodb update operators (ex: set)
+            completed: true
+        }
+    }, {
+        returnOriginal: false //in order to get back updated document
+    }).then((result) => {
+        console.log(result);
+    });
 
     db.collection('Users').findOneAndUpdate({
         _id: new ObjectID('59b3df184e33750561003eea')
