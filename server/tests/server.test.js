@@ -9,9 +9,7 @@ const todos = [{
 },
 {
     text: 'second test todo'
-}
-]
-
+}]
 
 //this function will be run before every test case
 //we are adding it becase we are assuming the db is empty
@@ -76,5 +74,4 @@ describe('POST /todos', () => {
                 .end(done);
         });
     });
-
 });
