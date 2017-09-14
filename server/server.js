@@ -1,12 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const {ObjectId} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
-const {ObjectId} = require('mongodb');
 var app = express();
+const port = process.env.PORT || 3000;
 
 //configure body parser middleware
 //with this in place you can send JSON to the express app and it will parse it
@@ -51,8 +52,35 @@ app.get('/todos/:id', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log('started on port 3000')
+app.delete('/todos/:id', (req, res) => {
+    var id = req.params.id;
+
+    if(!ObjectId.isValid(id)){
+        return res.status(404).send();
+    }
+
+    Todo.findByIdAndRemove(id).then((todo) => {
+        if(!todo){
+            return res.status(400).send();
+        } else {
+            return res.send({todo});
+        }
+    }).then((e) => {
+        res.status(400).send();
+    });
+     
+
+    //pull id
+    //validate id
+        //not valid return 404
+    
+    //remove todo by id
+        //success if no doc send 404, if doc send doc back with 200
+        //err = 400 with empty body
+});
+
+app.listen(port, () => {
+    console.log(`started on port ${port}`)
 });
 
 module.exports = {app};
