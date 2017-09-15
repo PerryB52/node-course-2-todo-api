@@ -6,9 +6,9 @@ const {User} = require('./../server/models/user');
 
 //Todo.remove (delete multiple records - using a query )
 //result object displays how many records where removed
-// Todo.remove({}).then((result) => {
-//     console.log(result);
-// });
+Todo.remove({}).then((result) => {
+    console.log(result);
+});
 
 //find one and rmeove
 //result contains exact object that got removed - similar to findOne
