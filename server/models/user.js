@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
+const bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema({
     email: {
@@ -74,6 +75,26 @@ UserSchema.statics.findByToken = function (token) {
         'tokens.access': 'auth'
     });
 };
+
+//middleware used to hash pw before storing in mongo
+UserSchema.pre('save', function(next) {
+    var user = this;
+
+    if(user.isModified('password')){ //this method checks if a field has been modified
+        //user.password
+        //user.password = hash
+        //next
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(user.password, salt, (err, hash) => {
+                user.password = hash;
+                next();
+            });
+        });
+
+    } else {
+        next();
+    }
+});
 
 var User = mongoose.model('users', UserSchema);
 
