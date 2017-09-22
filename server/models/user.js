@@ -76,6 +76,29 @@ UserSchema.statics.findByToken = function (token) {
     });
 };
 
+//add user and pw validation method
+UserSchema.statics.findByCredentials = function (email, password) {
+    var User = this;
+
+    return User.findOne({email}).then((user) => {
+        if(!user){
+            return Promise.reject();
+        }
+
+        //bcrypt only supports callbacks - we make our own promise
+        return new Promise((resolve, reject) => {   
+            //use bcrypt. compare to compare pw and user.pw
+            bcrypt.compare(password, user.password, (err, res) => {
+                if(res){
+                    resolve(user);
+                } else {
+                    reject();
+                }
+            });
+        });
+    });
+};
+
 //middleware used to hash pw before storing in mongo
 UserSchema.pre('save', function(next) {
     var user = this;
